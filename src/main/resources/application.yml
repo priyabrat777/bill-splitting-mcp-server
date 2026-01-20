@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: bill-splitting-mcp-server
+  datasource:
+    url: jdbc:postgresql://localhost:5432/billsplitting
+    username: billsplitter
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  flyway:
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  ai:
+    mcp:
+      server:
+        enabled: true
+        name: bill-splitting-server
+        version: 1.0.0
+        description: MCP server for splitting bills among friends
+        transport: STDIO
+        type: SYNC
+        capabilities:
+          tools:
+            enabled: true
+          resources:
+            enabled: true
+          prompts:
+            enabled: true
+          completion: false
+          roots:
+            enabled: false
+          logging:
+            enabled: true
+
+logging:
+  level:
+    com.billsplitting: DEBUG
+    org.springframework.ai: INFO
+    org.flywaydb: INFO
